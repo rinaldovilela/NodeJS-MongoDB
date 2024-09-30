@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const {orders, OrderModel} = require('./src/models/orders')
+const {OrderModel} = require('./src/models/orders')
 const {connect} = require('./src/database/connection')
 
 
@@ -23,6 +23,11 @@ app.get('/orders', async (req, res) => {
     return res.send(orders);
 })
 
+app.post('/orders', async (req, res) => {
+    const order = new OrderModel(req.body);
+    await order.save();
+    return res.send(order);
+})
 
 app.listen(port, () => {
     connect()
